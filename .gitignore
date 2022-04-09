@@ -6,6 +6,12 @@ Makefile.in
 /py-compile
 /test-driver
 /ylwrap
+/Maze/.vs/
+/Maze/Maze/Maze.vcxproj
+/Maze/Maze/Maze.vcxproj.filters
+/Maze/Maze/Maze.vcxproj.user
+Maze/Maze.sln
+
 
 # http://www.gnu.org/software/autoconf
 
