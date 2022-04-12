@@ -20,13 +20,13 @@ enum ColorType { WHITE = 15, BLUE = 9, GREEN = 10, YELLOW = 14 }COLOR;	// Èò ÆÄ 
 int main()
 {
 	Read_maze();
+	Print_maze();
 	return 0;
 }
 
 void Read_maze()
 {
 	FILE* fp = NULL;
-	int maze[MAX][MAX];
 	fopen_s(&fp, "maze.txt", "r");
 
 	if (fp == NULL) {
@@ -36,19 +36,18 @@ void Read_maze()
 
 	for (int i = 0; i < MAX; i++) 
 		for (int j = 0; j < MAX; j++)
-			fscanf_s(fp, "%d", &maze[i][j]);
+			fscanf_s(fp, "%d", &Maze[i][j]);
 
-	for (int i = 0; i < MAX; i++) {
-		for (int j = 0; j < MAX; j++)
-			printf("%d ", maze[i][j]);
-		printf("\n");
-	}
 	fclose(fp);
 }
 
 void Print_maze()
 {
-
+	for (int i = 0; i < MAX; i++) {
+		for (int j = 0; j < MAX; j++)
+			printf("%d ", Maze[i][j]);
+		printf("\n");
+	}
 }
 
 void Textcolor(int colorNum)
