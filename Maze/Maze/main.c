@@ -3,7 +3,7 @@
 #include "pos.h"
 #include "stack.h"
 
-#define MAX 4
+#define MAX 16
 #define PATH 0			// 지나갈 수 있는 위치			// 초록
 #define WALL 1			// 지나갈 수 없는 위치			// 빨강
 #define vISITED 2		// 이미 방문한 위치				// 노랑
@@ -14,8 +14,8 @@ int Size;	// 미로의 크기
 
 void Read_maze();
 void Print_maze();
-void Textcolor(int);	// 출력 글자 색 변경
-enum ColorType { RED = 4*16, BLUE = 9*16, GREEN = 10*16, YELLOW = 14*16 }COLOR;	// 흰 파 초 노
+void Textcolor(int, int);	// 출력 글자 색 변경
+enum ColorType { WHITE = 15, BLACK = 0, RED = 4, BLUE = 9, GREEN = 10, YELLOW = 14}COLOR;	// 흰 파 초 노
 
 int main()
 {
@@ -46,19 +46,20 @@ void Print_maze()
 	for (int i = 0; i < MAX; i++) {
 		for (int j = 0; j < MAX; j++) {
 			switch (Maze[i][j]) {
-			case 0: Textcolor(GREEN); printf("□"); break;
-			case 1: Textcolor(RED); printf("□"); break;
-			case 2: Textcolor(YELLOW); printf(" "); break;
-			case 3: Textcolor(BLUE); printf(" "); break;
+			case 0: Textcolor(BLACK, GREEN); printf("□"); break;
+			case 1: Textcolor(BLACK, RED); printf("□"); break;
+			case 2: Textcolor(BLACK, YELLOW); printf("□"); break;
+			case 3: Textcolor(BLACK, BLUE); printf("□"); break;
 			}
-			// printf("%d ", Maze[i][j]);
 		}
 		printf("\n");
 	}
+	Textcolor(WHITE, BLACK);
+	printf("aaa");
 }
 
-void Textcolor(int colorNum)
+void Textcolor(int foreground, int background)
 {
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colorNum);
-	//SetConsoleActiveScreenBuffer(GetStdHandle(STD_OUTPUT_HANDLE), colorNum);
+	int color = foreground + background * 16;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
