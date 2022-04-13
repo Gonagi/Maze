@@ -1,7 +1,8 @@
 #include "stack.h"
+#include "pos.c"
 
 struct node {
-	Item data;
+	Item x, y;
 	Node next;
 };
 
@@ -14,7 +15,8 @@ Node Create_node()
 	Node new_node = (Node)malloc(sizeof(struct node));
 	if (new_node == NULL)
 		terminate("Error in Create_node : node could not be created.");
-	new_node->data = NULL;
+	new_node->x = NULL;
+	new_node->y = NULL;
 	new_node->next = NULL;
 
 	return new_node;
@@ -35,10 +37,19 @@ bool Is_empty(Stack stack)
 	return stack->top == NULL;
 }
 
-void Push(Stack stack, Item data)
+void Push(Stack stack, Item dir)
 {
 	Node new_node = Create_node();
-	new_node->data = data;
+	switch (dir) {
+	case 0:	// µ¿
+		new_node->y++;
+	case 1:	// ¼­
+		new_node->x++;
+	case 2:	// ³²
+		new_node->y--;
+	case 3:	// ºÏ
+		new_node->x--;
+	}
 
 	if (Is_empty(stack))
 		stack->top = new_node;
@@ -49,19 +60,26 @@ void Push(Stack stack, Item data)
 	}
 }
 
-Item Peek(Stack stack)
+Pos Peek(Stack stack)
 {
 	if (Is_empty(stack))
 		terminate("Error in Peek : Stack is empty.");
-	return stack->top->data;
+
+	Pos cur;
+	cur.x = stack->top->x;
+	cur.y = stack->top->y;
+
+	return cur;
 }
 
-Item Pop(Stack stack)
+Pos Pop(Stack stack)
 {
 	if (Is_empty(stack))
 		terminate("Error in Pop : Stack is empty.");
 	Node old_node = stack->top;
-	int old_data = old_node->data;
+	Pos old_cur;
+	old_cur.x = old_node->x;
+	old_cur.y = old_node->y;
 
 	stack->top = old_node->next;
 
@@ -69,13 +87,14 @@ Item Pop(Stack stack)
 	if (Is_empty(stack))
 		Remove_stack(stack);
 
-	return old_data;
+	return old_cur;
 }
 
 void Remove_node(Node old_node)
 {
 	free(old_node);
-	old_node->data = NULL;
+	old_node->x = NULL;
+	old_node->y = NULL;
 	old_node->next = NULL;
 }
 
@@ -94,7 +113,7 @@ void Print_stack(Stack stack)
 
 		printf("Stack : ");
 		while (node != NULL) {
-			printf("%d", node->data);
+			printf("(%d, %d)", node->x, node->y);
 			node = node->next;
 
 			if (node == NULL)
