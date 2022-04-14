@@ -3,7 +3,7 @@
 #include "pos.h"
 #include "stack.h"
 
-#define MAX 3
+// #define MAX 4
 #define PATH 0			// 지나갈 수 있는 위치			// 초록
 #define WALL 1			// 지나갈 수 없는 위치			// 빨강
 #define VISITED 2		// 이미 방문한 위치				// 노랑
@@ -49,6 +49,8 @@ int main()
 			}
 			cur = Pop(stack);
 		}
+		Print_maze();
+
 	}
 	Print_maze();
 	return 0; 
@@ -57,7 +59,7 @@ int main()
 void Read_maze()
 {
 	FILE* fp = NULL;
-	fopen_s(&fp, "test.txt", "r");
+	fopen_s(&fp, "maze.txt", "r");
 
 	if (fp == NULL) {
 		printf("Error in Read_maze");
@@ -81,11 +83,12 @@ void Print_maze()
 			case 2: Textcolor(BLACK, YELLOW); printf("□"); break;
 			case 3: Textcolor(BLACK, BLUE); printf("□"); break;
 			}
+			Textcolor(WHITE, BLACK);
 			// printf("%d ", Maze[i][j]);
 		}
 		printf("\n");
 	}
-	Textcolor(WHITE, BLACK);
+	printf("\n");
 }
 
 void Textcolor(int forground, int background)
