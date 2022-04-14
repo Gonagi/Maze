@@ -1,5 +1,5 @@
 #include "stack.h"
-#include "pos.c"
+#include "pos.h"
 
 struct node {
 	Item x, y;

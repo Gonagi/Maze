@@ -2,15 +2,13 @@
 #include <Windows.h>
 #include "pos.h"
 #include "stack.h"
-#include "pos.c"
 
-#define MAX 4
+#define MAX 3
 #define PATH 0			// 지나갈 수 있는 위치			// 초록
 #define WALL 1			// 지나갈 수 없는 위치			// 빨강
 #define VISITED 2		// 이미 방문한 위치				// 노랑
 #define BACKTRACKED 3	// 방문했다가 되돌아 나온 위치		// 파랑
 
-int Maze[MAX][MAX];
 int Size;	// 미로의 크기
 
 void Read_maze();
@@ -25,8 +23,6 @@ int main()
 	Pos cur;	// 현재 위치
 	cur.x = 0;
 	cur.y = 0;
-
-	int init_dir = 0;	// 어떤 위치에 도착했을 때 처음으로 시도해 볼 이동 방향
 	
 	Read_maze();
 	while (1) {
@@ -61,7 +57,7 @@ int main()
 void Read_maze()
 {
 	FILE* fp = NULL;
-	fopen_s(&fp, "maze.txt", "r");
+	fopen_s(&fp, "test.txt", "r");
 
 	if (fp == NULL) {
 		printf("Error in Read_maze");

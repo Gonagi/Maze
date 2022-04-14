@@ -1,5 +1,11 @@
-#pragma once
-#define HAVE_STRUCT_MOVE_TO
+#ifndef __POS_H__
+#define __POS_H__
+
+typedef struct position {
+	int x, y;
+}Pos;
+
+#endif
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -7,10 +13,5 @@
 
 int Maze[MAX][MAX];
 
-typedef struct position {
-	int x, y;
-}Pos;
-
 Pos Move_to(Pos, int);
 bool Movable(Pos, int);
-
