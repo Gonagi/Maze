@@ -2,11 +2,12 @@
 #include <Windows.h>
 #include "pos.h"
 #include "stack.h"
+#include "pos.c"
 
 #define MAX 16
 #define PATH 0			// 지나갈 수 있는 위치			// 초록
 #define WALL 1			// 지나갈 수 없는 위치			// 빨강
-#define vISITED 2		// 이미 방문한 위치				// 노랑
+#define VISITED 2		// 이미 방문한 위치				// 노랑
 #define BACKTRACKED 3	// 방문했다가 되돌아 나온 위치		// 파랑
 
 int Maze[MAX][MAX];
@@ -17,11 +18,44 @@ void Print_maze();
 void Textcolor(int, int);	// 출력 글자 색 변경
 enum ColorType { WHITE = 15, BLACK = 0, RED = 4, BLUE = 9, GREEN = 10, YELLOW = 14}COLOR;	// 흰 파 초 노
 
+
 int main()
 {
+	Stack stack = Create_stacK();
+	Pos cur;	// 현재 위치
+	cur.x = 0;
+	cur.y = 0;
+
+	int init_dir = 0;	// 어떤 위치에 도착했을 때 처음으로 시도해 볼 이동 방향
+	
 	Read_maze();
+	while (1) {
+		Maze[cur.x][cur.y] = VISITED;
+		if (cur.x == MAX - 1 && cur.y == MAX - 1) {	// 출구
+			printf("Found the path.\n");
+			break;
+		}
+		
+		bool forwarded = false;
+		for (int dir = 0; dir < 4; dir++) {
+			if (Movable(cur, dir)) {
+				Push(stack, cur);
+				cur = Move_to(cur, dir);
+				forwarded = true;
+				break;
+			}
+		}
+		if (!forwarded) {
+			Maze[cur.x][cur.y] = BACKTRACKED;
+			if (Is_empty(stack)) {
+				printf("No path exists.\n");
+				break;
+			}
+			cur = Pop(stack);
+		}
+	}
 	Print_maze();
-	return 0;
+	return 0; 
 }
 
 void Read_maze()
@@ -31,7 +65,7 @@ void Read_maze()
 
 	if (fp == NULL) {
 		printf("Error in Read_maze");
-		exit(1);
+		exit(1); 
 	}
 
 	for (int i = 0; i < MAX; i++) 
@@ -54,8 +88,6 @@ void Print_maze()
 		}
 		printf("\n");
 	}
-	Textcolor(WHITE, BLACK);
-	printf("aaa");
 }
 
 void Textcolor(int foreground, int background)

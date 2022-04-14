@@ -14,7 +14,7 @@ typedef struct stack* Stack;
 Node Create_node();
 Stack Create_stacK();
 bool Is_empty(Stack);
-void Push(Stack, Item);
+void Push(Stack, Pos);
 Pos Peek(Stack);
 Pos Pop(Stack);
 void Remove_node(Node);

@@ -37,19 +37,11 @@ bool Is_empty(Stack stack)
 	return stack->top == NULL;
 }
 
-void Push(Stack stack, Item dir)
+void Push(Stack stack, Pos cur)
 {
 	Node new_node = Create_node();
-	switch (dir) {
-	case 0:	// µ¿
-		new_node->y++;
-	case 1:	// ¼­
-		new_node->x++;
-	case 2:	// ³²
-		new_node->y--;
-	case 3:	// ºÏ
-		new_node->x--;
-	}
+	new_node->x = cur.x;
+	new_node->y = cur.y;
 
 	if (Is_empty(stack))
 		stack->top = new_node;
