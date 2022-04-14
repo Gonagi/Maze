@@ -9,7 +9,7 @@ typedef struct position {
 
 #include <stdio.h>
 #include <stdbool.h>
-#define MAX 16
+#define MAX 16	//
 
 int Maze[MAX][MAX];
 

@@ -14,7 +14,7 @@ int Size;	// 미로의 크기
 void Read_maze();
 void Print_maze();
 void Textcolor(int, int);   // 출력 글자 색 변경
-enum ColorType { WHITE = 15, BLACK = 0, RED = 4, BLUE = 9, GREEN = 10, YELLOW = 14 }COLOR;    // 흰 검 파 초 노
+enum ColorType { WHITE = 15, BLACK = 0, RED = 4, BLUE = 9, GREEN = 10, YELLOW = 14 }COLOR;    // 흰 검 빨 파 초 노
 
 
 int main()
@@ -33,16 +33,16 @@ int main()
 		}
 		
 		bool forwarded = false;
-		for (int dir = 0; dir < 4; dir++) {
-			if (Movable(cur, dir)) {
+		for (int dir = 0; dir < 4; dir++) {		// 북 동 남 서 방향으로 하나씩 확인
+			if (Movable(cur, dir)) {	// 움직일 수 있는 위치인지 확인
 				Push(stack, cur);
 				cur = Move_to(cur, dir);
 				forwarded = true;
 				break;
 			}
 		}
-		if (!forwarded) {
-			Maze[cur.x][cur.y] = BACKTRACKED;
+		if (!forwarded) {	// 갈수 없다면 
+			Maze[cur.x][cur.y] = BACKTRACKED;	// 뒤로 돌아감
 			if (Is_empty(stack)) {
 				printf("No path exists.\n");
 				break;
@@ -50,7 +50,6 @@ int main()
 			cur = Pop(stack);
 		}
 		Print_maze();
-
 	}
 	Print_maze();
 	return 0; 
