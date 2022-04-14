@@ -13,8 +13,8 @@ int Size;	// 미로의 크기
 
 void Read_maze();
 void Print_maze();
-void Textcolor(int);	// 출력 글자 색 변경
-enum ColorType { RED = 4*16, BLUE = 9*16, GREEN = 10*16, YELLOW = 14*16 }COLOR;	// 흰 파 초 노
+void Textcolor(int, int);   // 출력 글자 색 변경
+enum ColorType { WHITE = 15, BLACK = 0, RED = 4, BLUE = 9, GREEN = 10, YELLOW = 14 }COLOR;    // 흰 검 파 초 노
 
 
 int main()
@@ -76,19 +76,20 @@ void Print_maze()
 	for (int i = 0; i < MAX; i++) {
 		for (int j = 0; j < MAX; j++) {
 			switch (Maze[i][j]) {
-			case 0: Textcolor(GREEN); printf("□"); break;
-			case 1: Textcolor(RED); printf("□"); break;
-			case 2: Textcolor(YELLOW); printf(" "); break;
-			case 3: Textcolor(BLUE); printf(" "); break;
+			case 0: Textcolor(BLACK, GREEN); printf("□"); break;
+			case 1: Textcolor(BLACK, RED); printf("□"); break;
+			case 2: Textcolor(BLACK, YELLOW); printf("□"); break;
+			case 3: Textcolor(BLACK, BLUE); printf("□"); break;
 			}
 			// printf("%d ", Maze[i][j]);
 		}
 		printf("\n");
 	}
+	Textcolor(WHITE, BLACK);
 }
 
-void Textcolor(int colorNum)
+void Textcolor(int forground, int background)
 {
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colorNum);
-	//SetConsoleActiveScreenBuffer(GetStdHandle(STD_OUTPUT_HANDLE), colorNum);
+	int color = forground + background * 16;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
